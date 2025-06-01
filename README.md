@@ -34,3 +34,9 @@ MapleBoomerang is a responsive, browser-based application designed to help users
 
 ---
 
+## ⚠️ Disclaimer
+
+MapleBoomerang is an independent application created for informational purposes only. It is not affiliated with any official government body or immigration agency. The eligibility results generated are estimates based on publicly available scoring systems from IRCC (Canada) and Home Affairs (Australia).
+
+For accurate and personalized immigration advice, please consult a certified immigration consultant or legal professional.
+
