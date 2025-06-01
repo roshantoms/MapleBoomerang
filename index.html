@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MapleBoomerang</title>
+  <link rel="icon" href="./img/mbicon.ico" type="image/png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav class="navbar">
+      <div class="nav-left">
+        <img src="./img/mblogo.png" alt="Logo" class="logo" />
+      </div>
+      <div class="nav-center nav-links">
+        <a href="#">Home</a>
+        <a href="#" onclick="showForm('canada')">Canada</a>
+        <a href="#" onclick="showForm('australia')">Australia</a>
+      </div>
+      <div class="nav-right">
+        <button id="darkModeToggle" class="dark-mode-toggle">
+          <i id="toggleIcon" class="fas fa-moon"></i>
+        </button>
+      </div>
+    </nav>
+
+  <div class="container">
+    <div class="logo-container">
+      <img src="./img/mblogo.png" alt="MapleBoomerang Logo" class="app-logo">
+    </div>
+    <h1 class="app-name"><span class="maple">Maple</span><span class="boomerang">Boomerang</span></h1>
+
+    <div class="country-selector">
+      <button class="country-btn canada-btn" onclick="showForm('canada')">
+        <span class="flag-icon">🇨🇦</span> Canada
+      </button>
+      <button class="country-btn australia-btn" onclick="showForm('australia')">
+        <span class="flag-icon">🇦🇺</span> Australia
+      </button>
+    </div>
+  </div>
+  <div class="forms-overlay">
+    <!-- Canada Form -->
+    <div id="canada-form" class="form-container">
+      <h2>Canada</h2>
+      <form id="canadaCalculator">
+        <div class="form-group">
+          <label for="canada-birthdate">Date of Birth</label>
+          <input type="date" id="canada-birthdate" required />
+        </div>
+
+        <div class="form-group">
+          <label for="canada-education">Education Level</label>
+          <select id="canada-education" required>
+            <option value="">Select education level</option>
+            <option value="19">3 Year Diploma</option>
+            <option value="21">Bachelor's Degree</option>
+            <option value="23">Master's Degree</option>
+            <option value="25">PhD</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Work Experience</label>
+          <div id="canada-work-experiences">
+            <div class="work-experience-group">
+              <button type="button" class="remove-work-exp" onclick="removeWorkExp(this)">×</button>
+              <div class="date-input-group">
+                <div>
+                  <label>Start Date</label>
+                  <input type="date" class="work-start" required />
+                </div>
+                <div>
+                  <label>End Date</label>
+                  <input type="date" class="work-end" required />
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="add-work-exp" onclick="addWorkExp('canada')">+ Add Another Work Experience</button>
+        </div>
+
+        <div class="form-group">
+          <label for="canada-ielts">IELTS Score (CLB points)</label>
+          <input type="number" id="canada-ielts" min="0" max="32" placeholder="Enter CLB points" required />
+        </div>
+
+        <div class="form-group">
+          <label for="canada-relatives">Relatives in Canada</label>
+          <select id="canada-relatives" required>
+            <option value="0">No</option>
+            <option value="5">Yes</option>
+          </select>
+        </div>
+
+        <button type="submit">Calculate Score</button>
+      </form>
+
+      <div id="canada-result" class="result">
+        <div id="canada-points" class="points-display"></div>
+        <div id="canada-message"></div>
+      </div>
+    </div>
+
+    <!-- Australia Form -->
+    <div id="australia-form" class="form-container">
+      <h2>Australia</h2>
+      <form id="australiaCalculator">
+        <div class="form-group">
+          <label for="australia-birthdate">Date of Birth</label>
+          <input type="date" id="australia-birthdate" required />
+        </div>
+
+        <div class="form-group">
+          <label for="australia-ielts">IELTS Score (English proficiency)</label>
+          <select id="australia-ielts" required>
+            <option value="">Select an option</option>
+            <option value="0">No IELTS</option>
+            <option value="0">IELTS 6+</option>
+            <option value="10">IELTS 7+</option>
+            <option value="20">IELTS 8+</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="australia-education">Education Level</label>
+          <select id="australia-education" required>
+            <option value="">Select education level</option>
+            <option value="10">Diploma</option>
+            <option value="15">Bachelor's / Master's</option>
+            <option value="20">PhD</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Work Experience</label>
+          <div id="australia-work-experiences">
+            <div class="work-experience-group">
+              <button type="button" class="remove-work-exp" onclick="removeWorkExp(this)">×</button>
+              <div class="work-location-selector">
+                <label>Location</label>
+                <select class="work-location" onchange="changeWorkLocation(this)">
+                  <option value="outside">Outside Australia</option>
+                  <option value="inside">In Australia</option>
+                </select>
+              </div>
+              <div class="work-location-option outside active">
+                <div class="date-input-group">
+                  <div>
+                    <label>Start Date (Outside)</label>
+                    <input type="date" class="work-start-outside" />
+                  </div>
+                  <div>
+                    <label>End Date (Outside)</label>
+                    <input type="date" class="work-end-outside" />
+                  </div>
+                </div>
+              </div>
+              <div class="work-location-option inside">
+                <div class="date-input-group">
+                  <div>
+                    <label>Start Date (Inside)</label>
+                    <input type="date" class="work-start-inside" />
+                  </div>
+                  <div>
+                    <label>End Date (Inside)</label>
+                    <input type="date" class="work-end-inside" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="add-work-exp" onclick="addWorkExp('australia')">+ Add Another Work Experience</button>
+        </div>
+
+        <div class="form-group">
+          <label for="australia-partner">Partner Skills</label>
+          <select id="australia-partner" required>
+            <option value="0">No partner / Not eligible</option>
+            <option value="5">Citizen / PR</option>
+            <option value="10">Competent partner</option>
+          </select>
+        </div>
+
+        <button type="submit">Calculate Score</button>
+      </form>
+
+      <div id="australia-result" class="result">
+        <div id="australia-points" class="points-display"></div>
+        <div id="australia-message"></div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
