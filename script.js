@@ -70,10 +70,17 @@ function changeWorkLocation(select) {
     // Hide all options
     group.querySelectorAll('.work-location-option').forEach(option => {
         option.classList.remove('active');
+        option.querySelectorAll('input[type="date"]').forEach(input => {
+            input.removeAttribute('required');
+        });
     });
     
     // Show selected option
-    group.querySelector(`.work-location-option.${selectedValue}`).classList.add('active');
+    const activeOption = group.querySelector(`.work-location-option.${selectedValue}`);
+    activeOption.classList.add('active');
+    activeOption.querySelectorAll('input[type="date"]').forEach(input => {
+        input.setAttribute('required', 'true');
+    });
 }
 
 // Function to add work experience fields
@@ -138,6 +145,11 @@ function addWorkExp(type) {
     }
     
     container.appendChild(newGroup);
+
+    const initialLocationSelect = newGroup.querySelector('.work-location');
+    if (initialLocationSelect) {
+        changeWorkLocation(initialLocationSelect); // Call it to set initial required attributes
+    }
 }
 
 // Helper function to remove work experience fields
@@ -179,20 +191,22 @@ function calculateTotalYearsAustralia(containerId) {
         const location = locationSelect ? locationSelect.value : 'outside'; // default to outside
 
         if (location === 'outside') {
-            const start = group.querySelector('.work-start-outside')?.value;
-            const end = group.querySelector('.work-end-outside')?.value;
+            const startInput = group.querySelector('.work-start-outside');
+            const endInput = group.querySelector('.work-end-outside');
 
-            if (start && end) {
-                outsideYears += calculateYearsBetween(start, end);
+            // Only consider if inputs are visible (i.e., required) and have values
+            if (startInput && endInput && startInput.hasAttribute('required') && startInput.value && endInput.value) {
+                outsideYears += calculateYearsBetween(startInput.value, endInput.value);
             }
         }
 
         if (location === 'inside') {
-            const start = group.querySelector('.work-start-inside')?.value;
-            const end = group.querySelector('.work-end-inside')?.value;
+            const startInput = group.querySelector('.work-start-inside');
+            const endInput = group.querySelector('.work-end-inside');
 
-            if (start && end) {
-                insideYears += calculateYearsBetween(start, end);
+            // Only consider if inputs are visible (i.e., required) and have values
+            if (startInput && endInput && startInput.hasAttribute('required') && startInput.value && endInput.value) {
+                insideYears += calculateYearsBetween(startInput.value, endInput.value);
             }
         }
     });
